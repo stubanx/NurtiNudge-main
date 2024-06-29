@@ -19,7 +19,9 @@
     <p class="title">User object</p>
     <pre class="subtitle"><%= person %></pre>
   </div>
-  <!DOCTYPE html>
+  
+</div>
+<!DOCTYPE html>
 <html lang="en">
 <head>
     <meta charset="UTF-8">
@@ -100,14 +102,14 @@
             border: 1px solid #ccc;
             border-radius: 4px;
             box-sizing: border-box;
-            font-size: 16px; /* Ensure consistent font size */
+            font-size: 16px;
         }
         .weight-input {
             display: flex;
             justify-content: space-between;
         }
         .weight-input input {
-            width: calc(50% - 5px); /* Adjusted width to handle spacing */
+            width: calc(50% - 5px);
         }
         button {
             width: 100%;
@@ -129,16 +131,16 @@
             border: 1px solid #ccc;
             border-radius: 8px;
             background-color: #fafafa;
-            text-align: left; /* Align text to left for better readability */
+            text-align: left;
         }
         .meal-plan h2 {
             color: #28a745;
             margin-bottom: 15px;
         }
         .meal-plan p {
-            font-size: 16px; /* Slightly reduced font size for better fit */
+            font-size: 16px;
             margin-bottom: 10px;
-            line-height: 1.5; /* Improved line height for readability */
+            line-height: 1.5;
         }
         .meal-plan p i {
             color: #28a745;
@@ -146,10 +148,9 @@
         }
         .arrow {
             margin: 0 10px;
-            font-size: 2em; /* Increased arrow size */
+            font-size: 2em;
             color: #666;
         }
-        /* Styling for checkboxes */
         .checkbox-label {
             display: block;
             position: relative;
@@ -198,7 +199,6 @@
             border-width: 0 3px 3px 0;
             transform: rotate(45deg);
         }
-        /* Adjustments for responsive design */
         @media (max-width: 768px) {
             .container {
                 width: 100%;
@@ -212,10 +212,10 @@
                 margin-bottom: 10px;
             }
             .weight-input input {
-                width: 100%; /* Full width for weight input on smaller screens */
+                width: 100%;
             }
             .checkbox-label {
-                font-size: 14px; /* Smaller font size for checkboxes on smaller screens */
+                font-size: 14px;
             }
         }
     </style>
@@ -296,9 +296,9 @@
         <div id="section3" class="form-section">
             <label for="healthGoals">Health Goals:</label>
             <select id="healthGoals" name="healthGoals" required>
-                <option value="weight_loss"><i class="fas fa-weight"></i> Weight Loss</option>
-                <option value="muscle_gain"><i class="fas fa-dumbbell"></i> Muscle Gain</option>
-                <option value="maintenance"><i class="fas fa-heart"></i> Maintenance</option>
+                <option value="weight_loss">Weight Loss</option>
+                <option value="muscle_gain">Muscle Gain</option>
+                <option value="maintenance">Maintenance</option>
             </select>
 
             <button type="button" onclick="generateMealPlan()">Generate Meal Plan</button>
@@ -335,7 +335,7 @@
             nextSection.classList.add('active');
             
             var currentStep = document.querySelector('.step.active');
-            var nextStep = currentStep.nextElementSibling;
+            var nextStep = currentStep.nextElementSibling.nextElementSibling;
             
             currentStep.classList.remove('active');
             nextStep.classList.add('active');
@@ -343,24 +343,45 @@
     }
     
     function generateMealPlan() {
-        // Implement meal plan generation logic here
-        // Example: Fetch data from form and generate meal plan
-        
-        // Display the meal plan result container
+        var form = document.getElementById('mealPlanForm');
+        var formData = new FormData(form);
+        var data = {};
+        formData.forEach((value, key) => {
+            data[key] = value;
+        });
+
+        fetch('../views/backend.js', {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json',
+            },
+            body: JSON.stringify(data),
+        })
+        .then(response => response.json())
+        .then(result => {
+            displayMealPlan(result);
+        })
+        .catch(error => {
+            console.error('Error:', error);
+        });
+    }
+    
+    function displayMealPlan(mealPlan) {
         var mealPlanResult = document.getElementById('mealPlanResult');
         mealPlanResult.style.display = 'block';
         
-        // Scroll to the meal plan result container
-        mealPlanResult.scrollIntoView({ behavior: 'smooth' });
+        var html = '<h2>Your Personalized Meal Plan</h2>';
+        mealPlan.forEach(meal => {
+            html += `<p><i class="fas fa-utensils"></i> ${meal.name}</p>`;
+            html += `<p>${meal.description}</p>`;
+        });
+        mealPlanResult.innerHTML = html;
         
-        // You can implement actual meal plan generation logic here
-        // For now, let's display a simple message
-        mealPlanResult.innerHTML = '<h2>Meal Plan Generated</h2><p>Your personalized meal plan will be displayed here.</p>';
+        mealPlanResult.scrollIntoView({ behavior: 'smooth' });
     }
 </script>
 
 </body>
 </html>
 
-</div>
 <%- include('./layouts/footer') %>
