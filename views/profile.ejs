@@ -19,5 +19,348 @@
     <p class="title">User object</p>
     <pre class="subtitle"><%= person %></pre>
   </div>
+  <!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Personalized Meal Plan</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css">
+    <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@400;500;700&display=swap" rel="stylesheet">
+    <style>
+        body {
+            font-family: 'Roboto', sans-serif;
+            margin: 0;
+            padding: 0;
+            background-color: #f4f4f9;
+            color: #333;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            min-height: 100vh;
+        }
+        .container {
+            max-width: 90%;
+            margin: 20px;
+            padding: 20px;
+            background-color: #fff;
+            box-shadow: 0 0 15px rgba(0, 0, 0, 0.1);
+            border-radius: 10px;
+            text-align: center;
+        }
+        h1 {
+            font-size: 2em;
+            color: #28a745;
+            margin-bottom: 20px;
+        }
+        .step-container {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 20px;
+        }
+        .step {
+            background-color: #f0f0f0;
+            padding: 20px;
+            border-radius: 50%;
+            cursor: pointer;
+            transition: background-color 0.3s;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+            width: 80px;
+            height: 80px;
+            font-size: 1.5em;
+            color: #666;
+        }
+        .step.active {
+            background-color: #28a745;
+            color: white;
+        }
+        .step:last-child {
+            margin-left: 10px;
+        }
+        .form-section {
+            display: none;
+        }
+        .form-section.active {
+            display: block;
+        }
+        label {
+            display: block;
+            margin-bottom: 10px;
+            font-weight: 500;
+            text-align: left;
+        }
+        input, select {
+            width: 100%;
+            padding: 10px;
+            margin-bottom: 15px;
+            border: 1px solid #ccc;
+            border-radius: 4px;
+            box-sizing: border-box;
+            font-size: 16px; /* Ensure consistent font size */
+        }
+        .weight-input {
+            display: flex;
+            justify-content: space-between;
+        }
+        .weight-input input {
+            width: calc(50% - 5px); /* Adjusted width to handle spacing */
+        }
+        button {
+            width: 100%;
+            padding: 15px;
+            background-color: #28a745;
+            color: white;
+            border: none;
+            border-radius: 4px;
+            font-size: 16px;
+            cursor: pointer;
+            transition: background-color 0.3s;
+        }
+        button:hover {
+            background-color: #218838;
+        }
+        .meal-plan {
+            margin-top: 20px;
+            padding: 20px;
+            border: 1px solid #ccc;
+            border-radius: 8px;
+            background-color: #fafafa;
+            text-align: left; /* Align text to left for better readability */
+        }
+        .meal-plan h2 {
+            color: #28a745;
+            margin-bottom: 15px;
+        }
+        .meal-plan p {
+            font-size: 16px; /* Slightly reduced font size for better fit */
+            margin-bottom: 10px;
+            line-height: 1.5; /* Improved line height for readability */
+        }
+        .meal-plan p i {
+            color: #28a745;
+            margin-right: 10px;
+        }
+        .arrow {
+            margin: 0 10px;
+            font-size: 2em; /* Increased arrow size */
+            color: #666;
+        }
+        /* Styling for checkboxes */
+        .checkbox-label {
+            display: block;
+            position: relative;
+            padding-left: 35px;
+            margin-bottom: 12px;
+            cursor: pointer;
+            font-size: 16px;
+            user-select: none;
+        }
+        .checkbox-label input {
+            position: absolute;
+            opacity: 0;
+            cursor: pointer;
+            height: 0;
+            width: 0;
+        }
+        .checkmark {
+            position: absolute;
+            top: 0;
+            left: 0;
+            height: 25px;
+            width: 25px;
+            background-color: #ccc;
+            border-radius: 4px;
+        }
+        .checkbox-label:hover input ~ .checkmark {
+            background-color: #ccc;
+        }
+        .checkbox-label input:checked ~ .checkmark {
+            background-color: #2196F3;
+        }
+        .checkmark:after {
+            content: "";
+            position: absolute;
+            display: none;
+        }
+        .checkbox-label input:checked ~ .checkmark:after {
+            display: block;
+        }
+        .checkbox-label .checkmark:after {
+            left: 9px;
+            top: 5px;
+            width: 6px;
+            height: 12px;
+            border: solid white;
+            border-width: 0 3px 3px 0;
+            transform: rotate(45deg);
+        }
+        /* Adjustments for responsive design */
+        @media (max-width: 768px) {
+            .container {
+                width: 100%;
+                margin: 10px;
+            }
+            .step-container {
+                flex-direction: column;
+                align-items: center;
+            }
+            .step {
+                margin-bottom: 10px;
+            }
+            .weight-input input {
+                width: 100%; /* Full width for weight input on smaller screens */
+            }
+            .checkbox-label {
+                font-size: 14px; /* Smaller font size for checkboxes on smaller screens */
+            }
+        }
+    </style>
+</head>
+<body>
+
+<div class="container">
+    <h1><i class="fas fa-utensils"></i> Personalized Meal Plan</h1>
+    
+    <div class="step-container">
+        <div class="step active" onclick="showSection(1)">
+            <i class="fas fa-user"></i>
+        </div>
+        <div class="arrow">&#8594;</div>
+        <div class="step" onclick="showSection(2)">
+            <i class="fas fa-utensil-spoon"></i>
+        </div>
+        <div class="arrow">&#8594;</div>
+        <div class="step" onclick="showSection(3)">
+            <i class="fas fa-heartbeat"></i>
+        </div>
+    </div>
+    
+    <form id="mealPlanForm">
+        <div id="section1" class="form-section active">
+            <label for="age">Age:</label>
+            <input type="number" id="age" name="age" placeholder="Enter your age" min="10" max="90" required>
+
+            <label for="gender">Gender:</label>
+            <select id="gender" name="gender" required>
+                <option value="female">Female</option>
+                <option value="male">Male</option>
+            </select>
+
+            <div class="weight-input">
+                <label for="weight">Weight:</label>
+                <input type="number" id="weight" name="weight" placeholder="Weight" required>
+                <select id="weightUnit" name="weightUnit" required>
+                    <option value="kg">kg</option>
+                    <option value="lbs">lbs</option>
+                </select>
+            </div>
+
+            <label for="height">Height (cm):</label>
+            <input type="number" id="height" name="height" required>
+
+            <label for="activityLevel">Activity Level:</label>
+            <select id="activityLevel" name="activityLevel" required>
+                <option value="sedentary">Sedentary</option>
+                <option value="light">Light</option>
+                <option value="moderate">Moderate</option>
+                <option value="active">Active</option>
+                <option value="very_active">Very Active</option>
+            </select>
+            
+            <button type="button" onclick="nextSection()">Next</button>
+        </div>
+
+        <div id="section2" class="form-section">
+            <label for="dietaryPreference">Dietary Preference:</label>
+            <select id="dietaryPreference" name="dietaryPreference" required>
+                <option value="vegan">Vegan</option>
+                <option value="vegetarian">Vegetarian</option>
+                <option value="gluten_free">Gluten-Free</option>
+                <option value="regular">Regular</option>
+            </select>
+
+            <label>Allergies:</label>
+            <div id="allergiesOptions">
+                <label class="checkbox-label"><input type="checkbox" name="allergies" value="nuts"> Nuts</label><br>
+                <label class="checkbox-label"><input type="checkbox" name="allergies" value="dairy"> Dairy</label><br>
+                <label class="checkbox-label"><input type="checkbox" name="allergies" value="gluten"> Gluten</label><br>
+            </div>
+
+            <button type="button" onclick="nextSection()">Next</button>
+        </div>
+
+        <div id="section3" class="form-section">
+            <label for="healthGoals">Health Goals:</label>
+            <select id="healthGoals" name="healthGoals" required>
+                <option value="weight_loss"><i class="fas fa-weight"></i> Weight Loss</option>
+                <option value="muscle_gain"><i class="fas fa-dumbbell"></i> Muscle Gain</option>
+                <option value="maintenance"><i class="fas fa-heart"></i> Maintenance</option>
+            </select>
+
+            <button type="button" onclick="generateMealPlan()">Generate Meal Plan</button>
+        </div>
+    </form>
+
+    <div id="mealPlanResult" class="meal-plan" style="display: none;">
+        <!-- Meal plan result will be displayed here -->
+    </div>
+</div>
+
+<script>
+    function showSection(section) {
+        var sections = document.querySelectorAll('.form-section');
+        var steps = document.querySelectorAll('.step');
+        
+        sections.forEach(function(sec, index) {
+            if (index + 1 === section) {
+                sec.classList.add('active');
+                steps[index].classList.add('active');
+            } else {
+                sec.classList.remove('active');
+                steps[index].classList.remove('active');
+            }
+        });
+    }
+    
+    function nextSection() {
+        var currentSection = document.querySelector('.form-section.active');
+        var nextSection = currentSection.nextElementSibling;
+        
+        if (nextSection) {
+            currentSection.classList.remove('active');
+            nextSection.classList.add('active');
+            
+            var currentStep = document.querySelector('.step.active');
+            var nextStep = currentStep.nextElementSibling;
+            
+            currentStep.classList.remove('active');
+            nextStep.classList.add('active');
+        }
+    }
+    
+    function generateMealPlan() {
+        // Implement meal plan generation logic here
+        // Example: Fetch data from form and generate meal plan
+        
+        // Display the meal plan result container
+        var mealPlanResult = document.getElementById('mealPlanResult');
+        mealPlanResult.style.display = 'block';
+        
+        // Scroll to the meal plan result container
+        mealPlanResult.scrollIntoView({ behavior: 'smooth' });
+        
+        // You can implement actual meal plan generation logic here
+        // For now, let's display a simple message
+        mealPlanResult.innerHTML = '<h2>Meal Plan Generated</h2><p>Your personalized meal plan will be displayed here.</p>';
+    }
+</script>
+
+</body>
+</html>
+
 </div>
 <%- include('./layouts/footer') %>
