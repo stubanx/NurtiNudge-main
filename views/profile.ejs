@@ -19,16 +19,14 @@
     <p class="title">User object</p>
     <pre class="subtitle"><%= person %></pre>
   </div>
-  
-</div>
-<!DOCTYPE html>
-<html lang="en">
+  <html lang="en">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Personalized Meal Plan</title>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css">
     <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@400;500;700&display=swap" rel="stylesheet">
+    <script src="https://cdn.jsdelivr.net/npm/axios/dist/axios.min.js"></script>
     <style>
         body {
             font-family: 'Roboto', sans-serif;
@@ -349,21 +347,27 @@
         formData.forEach((value, key) => {
             data[key] = value;
         });
-
-        fetch('../views/backend.js', {
-            method: 'POST',
-            headers: {
-                'Content-Type': 'application/json',
-            },
-            body: JSON.stringify(data),
-        })
-        .then(response => response.json())
-        .then(result => {
-            displayMealPlan(result);
-        })
-        .catch(error => {
-            console.error('Error:', error);
-        });
+        axios.post('./backend.js', data)
+            .then(response => {
+                displayMealPlan(response.data);
+            })
+            .catch(error => {
+                console.error('Error:', error);
+            });
+        // fetch('./backend.js', {
+        //     method: 'POST',
+        //     headers: {
+        //         'Content-Type': 'application/json',
+        //     },
+        //     body: JSON.stringify(data),
+        // })
+        // .then(response => response.json())
+        // .then(result => {
+        //     displayMealPlan(result);
+        // })
+        // .catch(error => {
+        //     console.error('Error:', error);
+        // });
     }
     
     function displayMealPlan(mealPlan) {
@@ -385,3 +389,6 @@
 </html>
 
 <%- include('./layouts/footer') %>
+
+</div>
+<!-- <!DOCTYPE html> -->
