@@ -1,6 +1,6 @@
 <%- include('./layouts/header') %>
 
-<h1 class="title">Role Based Access Control</h1>
+<!-- <h1 class="title">Role Based Access Control</h1>
 <div class="tutorial-info">
   <ol class="tutorial-info">
     <li><b>Express JS </b></li>
@@ -24,6 +24,120 @@
     <li>Handling <b>HTTP error</b> (ex: 404, etc)</li>
     <li>Somethings are always extra 😊</li>
   </ol>
-</div>
+</div> -->
+
+
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>NutriNudge</title>
+    <link rel="stylesheet" href="/css/style.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/css/all.min.css">
+    <style>
+        /* Add custom styles for new sections */
+        .features, .testimonials, .newsletter {
+            padding: 50px 20px;
+        }
+        .feature, .testimonial {
+            margin-bottom: 20px;
+        }
+        .newsletter form {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+        }
+        .newsletter input[type="email"] {
+            padding: 10px;
+            margin-right: 10px;
+            border: 1px solid #ff66b2;
+        }
+        .newsletter button {
+            padding: 10px 20px;
+            background-color: #ff66b2;
+            color: white;
+            border: none;
+            cursor: pointer;
+        }
+        .footer-links {
+            display: flex;
+            justify-content: center;
+            gap: 15px;
+        }
+    </style>
+</head>
+<body>
+    <header>
+        <h1>NutriNudge</h1>
+        <p>Your Personal Diet Plan Maker</p>
+    </header>
+    <nav>
+        <a href="/">Home</a>
+        <a href="#features">Features</a>
+        <a href="#testimonials">Testimonials</a>
+        <a href="#contact">Contact</a>
+    </nav>
+    <div class="container">
+        <h2>Welcome to NutriNudge</h2>
+        <p>Get personalized diet plans tailored to your needs.</p>
+        <button class="btn" onclick="window.location.href='/auth/login'">Login</button>
+        <button class="btn" onclick="window.location.href='/auth/signup'">Sign Up</button>
+    </div>
+
+    <!-- Features Section -->
+    <div id="features" class="features">
+        <h2>Features</h2>
+        <div class="feature">
+            <h3>Personalized Plans</h3>
+            <p>Customized diet plans based on your preferences and health goals.</p>
+        </div>
+        <div class="feature">
+            <h3>Expert Advice</h3>
+            <p>Get tips and advice from certified nutritionists.</p>
+        </div>
+        <div class="feature">
+            <h3>Track Progress</h3>
+            <p>Monitor your progress with our intuitive tracking tools.</p>
+        </div>
+    </div>
+
+    <!-- Testimonials Section -->
+    <div id="testimonials" class="testimonials">
+        <h2>User Testimonials</h2>
+        <div class="testimonial">
+            <p>"NutriNudge has changed my life! The personalized plans are easy to follow and very effective."</p>
+            <p>- Jane Doe</p>
+        </div>
+        <div class="testimonial">
+            <p>"I love how NutriNudge provides expert advice and keeps me motivated."</p>
+            <p>- John Smith</p>
+        </div>
+    </div>
+
+    <!-- Newsletter Signup -->
+    <div class="newsletter">
+        <h2>Stay Updated</h2>
+        <form action="/subscribe" method="post">
+            <input type="email" name="email" placeholder="Enter your email" required>
+            <button type="submit">Subscribe</button>
+        </form>
+    </div>
+
+    <footer>
+        <p>&copy; 2024 NutriNudge. All rights reserved.</p>
+        <div class="footer-links">
+            <a href="#">Privacy Policy</a>
+            <a href="#">Terms of Service</a>
+            <a href="https://facebook.com" target="_blank"><i class="fab fa-facebook-f"></i></a>
+            <a href="https://twitter.com" target="_blank"><i class="fab fa-twitter"></i></a>
+            <a href="https://instagram.com" target="_blank"><i class="fab fa-instagram"></i></a>
+        </div>
+    </footer>
+</body>
+</html>
+
+
 
 <%- include('./layouts/footer') %>
